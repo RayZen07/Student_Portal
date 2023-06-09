@@ -5,10 +5,7 @@ import com.StudentPortal.PortalUtility.StudentPortal_Utility;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class PortalLogin {
         public static BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
@@ -35,13 +32,27 @@ public class PortalLogin {
             if (resultSet1.next())
             {
                 System.out.println("LOGIN SUCCESSFUL:::::");
-                System.out.println("WELCOME:::::");
+                System.out.println("Enter Your Roll Number :");
+                int roll= Integer.parseInt(bf.readLine());
+                String sql="Select * from student where RollNo="+roll;
+                PreparedStatement preparedStatement=connection.prepareStatement(sql);
+                ResultSet rs=preparedStatement.executeQuery();
+                while (rs.next())
+                {
+                    int RollNo=rs.getInt(1);
+                    String Name=rs.getString(2);
+                    String Course=rs.getString(3);
+                    System.out.println("WELCOME::::::::: "+ Name);
+
+                }
+
 
 
             }
             else
             {
-                System.out.println("WWrong Username or Password");
+                System.out.println("Wrong Username or Password");
+
             }
 
         }
